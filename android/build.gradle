@@ -74,4 +74,8 @@ def kotlin_version = getExtOrDefault("kotlinVersion")
 dependencies {
   implementation "com.facebook.react:react-android"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+   // Google Play Services for SMS Retriever
+  implementation 'com.google.android.gms:play-services-auth:21.4.0'
+  implementation 'com.google.android.gms:play-services-auth-api-phone:18.3.0'
 }

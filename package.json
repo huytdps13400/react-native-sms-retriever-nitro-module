@@ -1,12 +1,12 @@
 {
-  "name": "react-native-sms-retriever",
+  "name": "@ebrimasamba/react-native-sms-retriever",
   "version": "0.1.0",
   "description": "A react native android sms retriever api library for the new architecture",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
     ".": {
-      "source": "./src/index.tsx",
+      "source": "./src/index.ts",
       "types": "./lib/typescript/src/index.d.ts",
       "default": "./lib/module/index.js"
     },
@@ -16,11 +16,7 @@
     "src",
     "lib",
     "android",
-    "ios",
-    "cpp",
-    "*.podspec",
     "react-native.config.js",
-    "!ios/build",
     "!android/build",
     "!android/gradle",
     "!android/gradlew",
@@ -36,14 +32,17 @@
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
-    "prepare": "bob build",
+    "clean": "del-cli android/build example/android/build example/android/app/build lib",
+    "build": "tsc src/index.ts --outDir lib/module --declaration --declarationDir lib/typescript/src --target ES2020 --module commonjs --moduleResolution node --esModuleInterop --allowSyntheticDefaultImports --jsx react-jsx --skipLibCheck",
     "release": "release-it --only-version"
   },
   "keywords": [
     "react-native",
-    "ios",
-    "android"
+    "android",
+    "sms",
+    "otp",
+    "sms-retriever",
+    "turbo-module"
   ],
   "repository": {
     "type": "git",
@@ -79,7 +78,7 @@
     "prettier": "^3.6.2",
     "react": "19.1.0",
     "react-native": "0.81.1",
-    "react-native-builder-bob": "^0.40.13",
+    "react-native-builder-bob": "latest",
     "release-it": "^19.0.4",
     "turbo": "^2.5.6",
     "typescript": "^5.9.2"
@@ -149,7 +148,7 @@
     ]
   },
   "codegenConfig": {
-    "name": "SmsRetrieverSpec",
+    "name": "SMSRetrieverSpec",
     "type": "modules",
     "jsSrcsDir": "src",
     "android": {
@@ -157,7 +156,7 @@
     }
   },
   "create-react-native-library": {
-    "languages": "kotlin-objc",
+    "languages": "kotlin",
     "type": "turbo-module",
     "version": "0.54.3"
   }

@@ -1,7 +1,31 @@
-import { TurboModuleRegistry, type TurboModule } from 'react-native';
+import type { CodegenTypes, TurboModule } from 'react-native';
+import { TurboModuleRegistry } from 'react-native';
 
-export interface Spec extends TurboModule {
-  multiply(a: number, b: number): number;
+export interface SMSError {
+  type:
+    | 'TIMEOUT'
+    | 'PERMISSION_DENIED'
+    | 'SERVICE_UNAVAILABLE'
+    | 'INVALID_SMS_FORMAT'
+    | 'UNKNOWN_ERROR';
+  message: string;
+  retryCount: number;
 }
 
-export default TurboModuleRegistry.getEnforcing<Spec>('SmsRetriever');
+export interface SMSStatus {
+  isListening: boolean;
+  isRegistered: boolean;
+  retryCount: number;
+}
+
+export interface Spec extends TurboModule {
+  startSMSListener(): void;
+  startSMSListenerWithPromise(timeoutMs?: number): Promise<string>;
+  readonly onSMSRetrieved: CodegenTypes.EventEmitter<string>;
+  readonly onSMSError: CodegenTypes.EventEmitter<SMSError>;
+  stopSMSListener(): void;
+  getAppHash(): Promise<string>;
+  getStatus(): Promise<SMSStatus>;
+}
+
+export default TurboModuleRegistry.getEnforcing<Spec>('SMSRetriever') as Spec;
