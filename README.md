@@ -25,9 +25,7 @@ yarn add @ebrimasamba/react-native-sms-retriever
 
 ### Android Setup
 
-The library uses autolinking, so no additional setup is required for React Native 0.60+.
-
-For React Native < 0.60, you may need to manually link the library.
+The library uses autolinking, so no additional setup is required for React Native 0.76+.
 
 ## Usage
 
@@ -46,8 +44,6 @@ export default function App() {
     isListening,
     error,
     isReady,
-    startListening,
-    stopListening,
     clearError,
   } = useSMSRetriever({
     timeoutMs: 30000, // 30 seconds
@@ -59,37 +55,12 @@ export default function App() {
     },
   });
 
-  const handleStartListening = async () => {
-    try {
-      clearError();
-      await startListening();
-    } catch (err) {
-      Alert.alert('Error', `Failed to start listening: ${err}`);
-    }
-  };
-
   return (
     <View style={{ flex: 1, padding: 20 }}>
       <Text>App Hash: {appHash}</Text>
       <Text>Status: {isListening ? 'Listening...' : 'Ready'}</Text>
       {smsCode && <Text>OTP: {smsCode}</Text>}
       {error && <Text style={{ color: 'red' }}>Error: {error}</Text>}
-
-      <TouchableOpacity
-        onPress={handleStartListening}
-        disabled={!isReady || isListening}
-        style={{ backgroundColor: 'blue', padding: 10, margin: 10 }}
-      >
-        <Text style={{ color: 'white' }}>Start Listening</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={stopListening}
-        disabled={!isListening}
-        style={{ backgroundColor: 'red', padding: 10, margin: 10 }}
-      >
-        <Text style={{ color: 'white' }}>Stop Listening</Text>
-      </TouchableOpacity>
     </View>
   );
 }
@@ -184,7 +155,7 @@ Where `FA+9qCX9VSu` is your app hash (obtained from `getAppHash()`).
 
 ## Requirements
 
-- React Native 0.60+
+- React Native 0.76+ (New Arch)
 - Android API level 19+
 - Google Play Services (for SMS Retriever API)
 
