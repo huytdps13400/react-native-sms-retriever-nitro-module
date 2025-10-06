@@ -5,6 +5,15 @@ A React Native library for Android SMS Retriever API with support for both Nitro
 [![npm version](https://badge.fury.io/js/%40huymobile%2Freact-native-sms-retriever-nitro-module.svg)](https://badge.fury.io/js/%40huymobile%2Freact-native-sms-retriever-nitro-module)
 [![npm downloads](https://img.shields.io/npm/dm/@huymobile/react-native-sms-retriever-nitro-module.svg)](https://www.npmjs.com/package/@huymobile/react-native-sms-retriever-nitro-module)
 
+## 📱 Demo
+
+<div align="center">
+  
+![SMS Retriever Demo](react-native-sms-android.gif)
+
+*Automatic OTP detection without SMS permissions*
+
+</div>
 ## Features
 
 - ✅ **Android SMS Retriever API** - Automatically retrieve SMS messages
