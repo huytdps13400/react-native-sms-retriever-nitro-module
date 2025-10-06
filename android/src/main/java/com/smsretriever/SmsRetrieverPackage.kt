@@ -11,32 +11,26 @@ class SMSRetrieverPackage : BaseReactPackage() {
   companion object {
     init {
       try {
-        val nitroClass = Class.forName("com.margelo.nitro.core.HybridObjectRegistry")
-        val registerMethod = nitroClass.getMethod(
-          "registerHybridObjectConstructor",
-          String::class.java,
-          java.util.function.Supplier::class.java
-        )
-        val hybridClass = Class.forName("com.smsretriever.HybridSMSRetriever")
-        val supplier = java.util.function.Supplier<Any> {
-          hybridClass.getDeclaredConstructor().newInstance()
-        }
-        registerMethod.invoke(null, "SMSRetriever", supplier)
-        android.util.Log.i("SMSRetrieverPackage", "✅ Nitro module registered successfully")
+        // Nitrogen autolinking will handle registration automatically
+        val onLoadClass = Class.forName("com.margelo.nitro.com.smsretriever.NitroSMSRetrieverOnLoad")
+        val initMethod = onLoadClass.getMethod("initializeNative")
+        initMethod.invoke(null)
+        android.util.Log.i("SMSRetrieverPackage", "✅ Nitro C++ library loaded and HybridObject auto-registered")
       } catch (e: ClassNotFoundException) {
         android.util.Log.w("SMSRetrieverPackage", "Nitro modules not available, using TurboModule fallback")
       } catch (e: Exception) {
-        android.util.Log.w("SMSRetrieverPackage", "Failed to register Nitro module: ${e.message}")
+        android.util.Log.w("SMSRetrieverPackage", "Failed to load Nitro module: ${e.message}")
       }
     }
   }
 
-  override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? =
-    if (name == NativeSmsRetrieverSpec.NAME) {
+  override fun getModule(name: String, reactContext: ReactApplicationContext): NativeModule? {
+    return if (name == NativeSmsRetrieverSpec.NAME) {
       SMSRetrieverModule(reactContext)
     } else {
       null
     }
+  }
 
   override fun getReactModuleInfoProvider() = ReactModuleInfoProvider {
     mapOf(

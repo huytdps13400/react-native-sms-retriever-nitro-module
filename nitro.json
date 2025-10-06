@@ -1,7 +1,15 @@
 {
-  "cxxNamespace": ["huymobile", "nitro", "smsretriever"],
+  "cxxNamespace": ["huymobile", "smsretriever"],
+  "ios": {
+    "iosModuleName": "SMSRetriever"
+  },
   "android": {
-    "namespace": "com.smsretriever",
-    "libraryName": "NitroSMSRetriever"
+    "androidNamespace": ["com", "smsretriever"],
+    "androidCxxLibName": "NitroSMSRetriever"
+  },
+  "autolinking": {
+    "SMSRetriever": {
+      "kotlin": "HybridSMSRetriever"
+    }
   }
 }

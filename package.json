@@ -8,6 +8,7 @@
     ".": {
       "source": "./src/index.ts",
       "types": "./lib/typescript/src/index.d.ts",
+      "bun": "./lib/bun/index.js",
       "default": "./lib/module/index.js"
     },
     "./package.json": "./package.json"
@@ -36,7 +37,12 @@
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
     "clean": "del-cli android/build example/android/build example/android/app/build lib",
     "build": "tsc src/index.ts --outDir lib/module --declaration --declarationDir lib/typescript/src --target ES2020 --module commonjs --moduleResolution node --esModuleInterop --allowSyntheticDefaultImports --jsx react-jsx --skipLibCheck",
-    "release": "release-it --only-version"
+    "release": "release-it --only-version",
+    "bun:install": "bun install",
+    "bun:build": "bun build ./src/index.ts --outdir ./lib/bun --target node --format esm --sourcemap=external --minify --external react --external react-native --external react-native-nitro-modules",
+    "bun:link": "bun link",
+    "bun:example": "cd example && bun install",
+    "bun:all": "bun run bun:install && bun run bun:build && bun run bun:link && bun run bun:example"
   },
   "keywords": [
     "react-native",
@@ -59,7 +65,8 @@
     "one-time-password-old-architecture",
     "one-time-password-android",
     "one-time-password-ios",
-    "one-time-password-web"
+    "one-time-password-web",
+    "bun"
   ],
   "repository": {
     "type": "git",
@@ -110,6 +117,21 @@
     "example"
   ],
   "packageManager": "yarn@3.6.1",
+  "trustedDependencies": [
+    "react-native-nitro-modules",
+    "nitrogen"
+  ],
+  "bun": {
+    "enabled": true,
+    "lockfileFormat": "bun"
+  },
+  "resolutions": {
+    "react": "19.1.0",
+    "react-native": "0.81.1",
+    "@types/react": "^19.1.0",
+    "glob": "^9.0.0",
+    "rimraf": "^4.0.0"
+  },
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [

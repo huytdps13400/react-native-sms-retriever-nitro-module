@@ -1,9 +1,25 @@
 import type { HybridObject } from 'react-native-nitro-modules';
-import type { SMSStatus } from './types';
-import type { SMSError } from './types';
 
-export interface SMSRetriever extends HybridObject {
-  readonly appHash: string;
+export type SMSErrorType =
+  | 'TIMEOUT'
+  | 'PERMISSION_DENIED'
+  | 'SERVICE_UNAVAILABLE'
+  | 'INVALID_SMS_FORMAT'
+  | 'UNKNOWN_ERROR';
+
+export interface SMSError {
+  type: SMSErrorType;
+  message: string;
+  retryCount: number;
+}
+
+export interface SMSStatus {
+  isListening: boolean;
+  isRegistered: boolean;
+  retryCount: number;
+}
+
+export interface SMSRetriever extends HybridObject<{ android: 'kotlin' }> {
   readonly isListening: boolean;
   readonly isRegistered: boolean;
 

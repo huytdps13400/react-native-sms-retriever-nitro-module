@@ -1,0 +1,21 @@
+[install]
+production = false
+optional = true
+frozen-lockfile = false
+peer = true
+
+[build]
+target = "node"
+minify = true
+sourcemap = "external"
+
+[test]
+coverage = true
+
+[dev]
+port = 3000
+
+jsx = "react"
+jsxImportSource = "react"
+
+smol = true

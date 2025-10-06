@@ -4,17 +4,7 @@ import { NitroModules } from 'react-native-nitro-modules';
 import type { SMSRetriever } from './SMSRetriever.nitro';
 import type { SMSError } from './types';
 import type { SMSStatus } from './types';
-
-// Fallback to TurboModule
-let TurboModuleSMSRetriever: any = null;
-if (Platform.OS === 'android') {
-  try {
-    const module = require('./NativeSMSRetriever');
-    TurboModuleSMSRetriever = module.default;
-  } catch (error) {
-    console.warn('TurboModule not available:', error);
-  }
-}
+import { TurboModuleSMSRetriever } from './TurboModuleFallback';
 
 class SMSRetrieverNitro {
   private nitroModule: SMSRetriever | null = null;
@@ -24,23 +14,35 @@ class SMSRetrieverNitro {
     this.initializeNitro();
   }
 
-  private async initializeNitro() {
-    try {
-      if (Platform.OS === 'android') {
+  private initializeNitro() {
+    if (Platform.OS !== 'android') return;
+    setImmediate(() => {
+      try {
+        console.log('🔍 Attempting to initialize Nitro Module...');
         this.nitroModule =
           NitroModules.createHybridObject<SMSRetriever>('SMSRetriever');
         this.isNitroAvailable = true;
+        console.log('✅ Successfully initialized Nitro Module!');
+        console.log(`📊 Nitro Module Info:
+  - isListening: ${this.nitroModule!.isListening}
+  - isRegistered: ${this.nitroModule!.isRegistered}`);
+      } catch (error) {
+        console.log(
+          '⚠️ Nitro Module not available, falling back to TurboModule'
+        );
+        console.log('📝 Error details:', error);
+        this.isNitroAvailable = false;
+        this.nitroModule = null;
       }
-    } catch (error) {
-      console.warn('Nitro not available, using TurboModule:', error);
-      this.isNitroAvailable = false;
-    }
+    });
   }
 
   async getAppHash(): Promise<string> {
     if (this.isNitroAvailable && this.nitroModule) {
+      console.log('📱 [Nitro] Getting app hash...');
       return await this.nitroModule.getAppHash();
     } else if (TurboModuleSMSRetriever) {
+      console.log('📱 [TurboModule] Getting app hash...');
       return await TurboModuleSMSRetriever.getAppHash();
     }
     throw new Error('SMS Retriever is not available');
@@ -48,8 +50,14 @@ class SMSRetrieverNitro {
 
   async startListeningWithPromise(timeoutMs: number = 30000): Promise<string> {
     if (this.isNitroAvailable && this.nitroModule) {
+      console.log(
+        `🚀 [Nitro] Starting listener with promise (timeout: ${timeoutMs}ms)`
+      );
       return await this.nitroModule.startListeningWithPromise(timeoutMs);
     } else if (TurboModuleSMSRetriever) {
+      console.log(
+        `🚀 [TurboModule] Starting listener with promise (timeout: ${timeoutMs}ms)`
+      );
       return await TurboModuleSMSRetriever.startSMSListenerWithPromise(
         timeoutMs
       );
@@ -59,8 +67,10 @@ class SMSRetrieverNitro {
 
   startListening(): void {
     if (this.isNitroAvailable && this.nitroModule) {
+      console.log('🚀 [Nitro] Starting listener...');
       this.nitroModule.startListening();
     } else if (TurboModuleSMSRetriever) {
+      console.log('🚀 [TurboModule] Starting listener...');
       TurboModuleSMSRetriever.startSMSListener();
     }
   }

@@ -26,6 +26,8 @@ export default function App() {
     stopListening,
     reset,
   } = useSMSRetriever({
+    autoStart: true,
+    timeoutMs: 30000,
     onSuccess: (code: string) => {
       setOtp(code);
       Alert.alert('✅ Success', `OTP received: ${code}`);

@@ -18,9 +18,14 @@ A React Native library for Android SMS Retriever API with support for both Nitro
 ## Installation
 
 ```sh
+# Using npm
 npm install @huymobile/react-native-sms-retriever-nitro-module
-# or
+
+# Using yarn
 yarn add @huymobile/react-native-sms-retriever-nitro-module
+
+# Using bun
+bun add @huymobile/react-native-sms-retriever-nitro-module
 ```
 
 ### Android Setup

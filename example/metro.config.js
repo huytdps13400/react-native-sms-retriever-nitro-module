@@ -17,7 +17,13 @@ const finalConfig = {
   resolver: {
     ...config.resolver,
     sourceExts: [...config.resolver.sourceExts, 'mjs', 'cjs'],
-    nodeModulesPaths: [path.resolve(__dirname, 'node_modules')],
+    nodeModulesPaths: [
+      path.resolve(__dirname, 'node_modules'),
+      path.resolve(root, 'node_modules'),
+    ],
+    extraNodeModules: {
+      '@huymobile/react-native-sms-retriever-nitro-module': root,
+    },
 
     // Block parent node_modules to prevent duplicate React
     blockList: [
