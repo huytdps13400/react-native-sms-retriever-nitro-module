@@ -72,7 +72,11 @@
     "type": "git",
     "url": "git+https://github.com/huytdps13400/react-native-sms-retriever-nitro-module.git"
   },
-  "author": "huymobile <huytdps13400@gmail.com> (https://github.com/huytdps13400)",
+  "author": {
+    "name": "Huy Tran",
+    "email": "huytdps13400@gmail.com",
+    "url": "https://github.com/huytdps13400"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/huytdps13400/react-native-sms-retriever-nitro-module/issues"
@@ -81,6 +85,13 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
+  "contributors": [
+    {
+      "name": "Huy Tran",
+      "email": "huytdps13400@gmail.com",
+      "url": "https://github.com/huytdps13400"
+    }
+  ],
   "devDependencies": {
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/compat": "^1.3.2",
