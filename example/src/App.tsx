@@ -6,11 +6,14 @@ import {
   TouchableOpacity,
   Alert,
   Platform,
+  ScrollView,
 } from 'react-native';
-import { useSMSRetriever } from '../../src/index';
+import { useSMSRetriever } from '@huymobile/react-native-sms-retriever-nitro-module';
 
 export default function App() {
-  const [, setOtp] = useState<string>('');
+  const [otp, setOtp] = useState<string>('');
+  const [performanceInfo, setPerformanceInfo] = useState<string>('');
+
   const {
     appHash,
     smsCode,
@@ -18,38 +21,48 @@ export default function App() {
     isListening,
     error,
     isReady,
+    status,
     startListening,
     stopListening,
-    clearError,
     reset,
   } = useSMSRetriever({
-    timeoutMs: 30000,
     onSuccess: (code: string) => {
       setOtp(code);
-      Alert.alert('Success', `OTP received: ${code}`);
+      Alert.alert('✅ Success', `OTP received: ${code}`);
+      console.log('✅ OTP received:', code);
     },
     onError: (err: any) => {
-      Alert.alert('Error', `${err.type}: ${err.message}`);
+      Alert.alert('❌ Error', `${err.type}: ${err.message}`);
+      console.error('❌ SMS Error:', err);
     },
   });
 
   const handleStartListening = async () => {
     try {
-      clearError();
       setOtp('');
+      const startTime = Date.now();
       await startListening();
+      const endTime = Date.now();
+      const duration = endTime - startTime;
+      setPerformanceInfo(`Started in ${duration}ms`);
+      console.log('⏱️ Start listening took:', duration, 'ms');
     } catch (err) {
-      Alert.alert('Error', `Failed to start listening: ${err}`);
+      Alert.alert('❌ Error', `Failed to start listening: ${err}`);
+      console.error('Failed to start:', err);
     }
   };
 
   const handleStopListening = () => {
     stopListening();
+    setPerformanceInfo('');
+    console.log('🛑 Stopped listening');
   };
 
   const handleReset = () => {
     reset();
     setOtp('');
+    setPerformanceInfo('');
+    console.log('🔄 Reset state');
   };
 
   if (Platform.OS === 'ios') {
@@ -64,8 +77,9 @@ export default function App() {
     );
   }
 
+  console.log('otp', otp, 'smsCode', smsCode, 'appHash', appHash);
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>SMS Retriever Example</Text>
 
       <View style={styles.section}>
@@ -83,6 +97,26 @@ export default function App() {
               : 'Ready'}
         </Text>
       </View>
+
+      {status && (
+        <View style={styles.section}>
+          <Text style={styles.label}>Detailed Status:</Text>
+          <Text style={styles.value}>
+            Listening: {status.isListening ? 'Yes' : 'No'}
+            {'\n'}
+            Registered: {status.isRegistered ? 'Yes' : 'No'}
+            {'\n'}
+            Retry Count: {status.retryCount}
+          </Text>
+        </View>
+      )}
+
+      {performanceInfo && (
+        <View style={styles.section}>
+          <Text style={styles.label}>Performance:</Text>
+          <Text style={styles.value}>{performanceInfo}</Text>
+        </View>
+      )}
 
       {error && (
         <View style={styles.section}>
@@ -108,7 +142,7 @@ export default function App() {
           onPress={handleStartListening}
           disabled={!isReady || isListening}
         >
-          <Text style={styles.buttonText}>Start Listening</Text>
+          <Text style={styles.buttonText}>▶️ Start Listening</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -120,28 +154,34 @@ export default function App() {
           onPress={handleStopListening}
           disabled={!isListening}
         >
-          <Text style={styles.buttonText}>Stop Listening</Text>
+          <Text style={styles.buttonText}>⏹️ Stop Listening</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.button, styles.resetButton]}
           onPress={handleReset}
         >
-          <Text style={styles.buttonText}>Reset</Text>
+          <Text style={styles.buttonText}>🔄 Reset</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.instructions}>
-        <Text style={styles.instructionsTitle}>Instructions:</Text>
+        <Text style={styles.instructionsTitle}>📝 Instructions:</Text>
         <Text style={styles.instructionsText}>
-          1. Make sure your app is signed with the debug keystore{'\n'}
-          2. Use the app hash above in your SMS message{'\n'}
-          3. Send an SMS with the format: "Your OTP is 123456 FA+9qCX9VSu"
-          (replace with your app hash){'\n'}
-          4. The OTP will be automatically extracted and displayed
+          1. Copy the "App Hash" value above{'\n'}
+          2. Click "▶️ Start Listening"{'\n'}
+          3. Send SMS: "Your OTP is 123456 [YOUR_APP_HASH]"{'\n'}
+          4. OTP will be extracted automatically{'\n'}
+          {'\n'}
+          💡 Tips:{'\n'}• Check console logs for detailed debug info{'\n'}• SMS
+          format: "Your OTP is XXXXXX [HASH]"
         </Text>
       </View>
-    </View>
+
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>⚡ Using Nitro Module</Text>
+      </View>
+    </ScrollView>
   );
 }
 
@@ -228,6 +268,9 @@ const styles = StyleSheet.create({
   resetButton: {
     backgroundColor: '#2196F3',
   },
+  testButton: {
+    backgroundColor: '#FF9800',
+  },
   disabledButton: {
     backgroundColor: '#ccc',
   },
@@ -246,6 +289,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+    marginBottom: 15,
   },
   instructionsTitle: {
     fontSize: 16,
@@ -254,8 +298,20 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   instructionsText: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#666',
     lineHeight: 20,
+  },
+  footer: {
+    padding: 15,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 20,
+  },
+  footerText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#666',
   },
 });

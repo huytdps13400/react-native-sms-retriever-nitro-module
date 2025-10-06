@@ -21,6 +21,8 @@ apply plugin: "kotlin-android"
 
 apply plugin: "com.facebook.react"
 
+def hasNitroModules = findProject(":react-native-nitro-modules") != null
+
 def getExtOrIntegerDefault(name) {
   return rootProject.ext.has(name) ? rootProject.ext.get(name) : (project.properties["SmsRetriever_" + name]).toInteger()
 }
@@ -75,7 +77,12 @@ dependencies {
   implementation "com.facebook.react:react-android"
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-   // Google Play Services for SMS Retriever
+  // Google Play Services for SMS Retriever
   implementation 'com.google.android.gms:play-services-auth:21.4.0'
   implementation 'com.google.android.gms:play-services-auth-api-phone:18.3.0'
+
+  // Nitro Modules support
+  if (hasNitroModules) {
+    implementation project(":react-native-nitro-modules")
+  }
 }

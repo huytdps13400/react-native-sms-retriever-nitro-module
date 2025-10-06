@@ -1,16 +1,32 @@
 const path = require('path');
-const { getDefaultConfig } = require('@react-native/metro-config');
-const { withMetroConfig } = require('react-native-monorepo-config');
+const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 
 const root = path.resolve(__dirname, '..');
+const pak = require('../package.json');
 
-/**
- * Metro configuration
- * https://facebook.github.io/metro/docs/configuration
- *
- * @type {import('metro-config').MetroConfig}
- */
-module.exports = withMetroConfig(getDefaultConfig(__dirname), {
-  root,
-  dirname: __dirname,
+const modules = Object.keys({
+  ...pak.peerDependencies,
 });
+
+const config = getDefaultConfig(__dirname);
+
+const finalConfig = {
+  ...config,
+  watchFolders: [root],
+
+  resolver: {
+    ...config.resolver,
+    sourceExts: [...config.resolver.sourceExts, 'mjs', 'cjs'],
+    nodeModulesPaths: [path.resolve(__dirname, 'node_modules')],
+
+    // Block parent node_modules to prevent duplicate React
+    blockList: [
+      ...modules.map(
+        (m) =>
+          new RegExp(`^${escape(path.join(root, 'node_modules', m))}\\/.*$`)
+      ),
+    ],
+  },
+};
+
+module.exports = mergeConfig(config, finalConfig);

@@ -1,0 +1,7 @@
+{
+  "cxxNamespace": ["huymobile", "nitro", "smsretriever"],
+  "android": {
+    "namespace": "com.smsretriever",
+    "libraryName": "NitroSMSRetriever"
+  }
+}

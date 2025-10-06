@@ -1,12 +1,12 @@
 package com.smsretriever
 
+import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Base64
 import android.util.Log
 import java.security.MessageDigest
-import com.facebook.react.bridge.ReactApplicationContext
 
-class AppSignatureHelper(private val context: ReactApplicationContext) {
+class AppSignatureHelper(private val context: Context) {
 
     companion object {
         private const val HASH_TYPE = "SHA-256"

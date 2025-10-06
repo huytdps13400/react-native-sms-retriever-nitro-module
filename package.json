@@ -1,7 +1,7 @@
 {
-  "name": "@ebrimasamba/react-native-sms-retriever",
+  "name": "@huymobile/react-native-sms-retriever-nitro-module",
   "version": "1.0.0",
-  "description": "A react native android sms retriever api library for the new architecture",
+  "description": "A react native android sms retriever api library with Nitro module support for new architecture, old architecture, Nitro module, and Expo compatibility",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
   "exports": {
@@ -16,6 +16,8 @@
     "src",
     "lib",
     "android",
+    "nitro.json",
+    "app.plugin.js",
     "react-native.config.js",
     "!android/build",
     "!android/gradle",
@@ -42,18 +44,33 @@
     "sms",
     "otp",
     "sms-retriever",
-    "turbo-module"
+    "turbo-module",
+    "nitro-module",
+    "expo",
+    "new-architecture",
+    "old-architecture",
+    "sms-retriever",
+    "sms-retriever-nitro",
+    "sms-android",
+    "one-time-password",
+    "one-time-password-nitro",
+    "one-time-password-expo",
+    "one-time-password-new-architecture",
+    "one-time-password-old-architecture",
+    "one-time-password-android",
+    "one-time-password-ios",
+    "one-time-password-web"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ebrimasamba/react-native-sms-retriever.git"
+    "url": "git+https://github.com/huytdps13400/react-native-sms-retriever-nitro-module.git"
   },
-  "author": "ebrimasamba <ebrima.samba.75@gmail.com> (https://github.com/ebrimasamba)",
+  "author": "huymobile <huytdps13400@gmail.com> (https://github.com/huytdps13400)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ebrimasamba/react-native-sms-retriever/issues"
+    "url": "https://github.com/huytdps13400/react-native-sms-retriever-nitro-module/issues"
   },
-  "homepage": "https://github.com/ebrimasamba/react-native-sms-retriever#readme",
+  "homepage": "https://github.com/huytdps13400/react-native-sms-retriever-nitro-module#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -75,10 +92,12 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "jest": "^29.7.0",
+    "nitrogen": "^0.29.8",
     "prettier": "^3.6.2",
     "react": "19.1.0",
     "react-native": "0.81.1",
     "react-native-builder-bob": "latest",
+    "react-native-nitro-modules": "^0.29.8",
     "release-it": "^19.0.4",
     "turbo": "^2.5.6",
     "typescript": "^5.9.2"
@@ -159,5 +178,12 @@
     "languages": "kotlin",
     "type": "turbo-module",
     "version": "0.54.3"
+  },
+  "nitro": {
+    "name": "SMSRetriever",
+    "ios": false,
+    "android": {
+      "namespace": "com.smsretriever"
+    }
   }
 }

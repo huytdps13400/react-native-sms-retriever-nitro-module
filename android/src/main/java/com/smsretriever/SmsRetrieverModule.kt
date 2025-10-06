@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Handler
 import android.os.Looper
-import com.smsretriever.NativeSMSRetrieverSpec
+import com.smsretriever.NativeSmsRetrieverSpec
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.WritableMap
@@ -35,7 +35,7 @@ enum class SMSErrorType {
     UNKNOWN_ERROR
 }
 
-class SMSRetrieverModule(reactContext: ReactApplicationContext) : NativeSMSRetrieverSpec(reactContext) {
+class SMSRetrieverModule(reactContext: ReactApplicationContext) : NativeSmsRetrieverSpec(reactContext) {
 
     companion object {
         private const val TAG = "SMSRetrieverModule"
@@ -210,7 +210,18 @@ class SMSRetrieverModule(reactContext: ReactApplicationContext) : NativeSMSRetri
         if (!isRegistered) {
             try {
                 val intentFilter = IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
-                reactApplicationContext.registerReceiver(smsBroadcastReceiver, intentFilter)
+                
+                // Android 13+ requires RECEIVER_EXPORTED flag
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                    reactApplicationContext.registerReceiver(
+                        smsBroadcastReceiver, 
+                        intentFilter,
+                        Context.RECEIVER_EXPORTED
+                    )
+                } else {
+                    reactApplicationContext.registerReceiver(smsBroadcastReceiver, intentFilter)
+                }
+                
                 isRegistered = true
                 Log.d(TAG, "SMS BroadcastReceiver registered successfully")
             } catch (e: Exception) {

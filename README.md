@@ -1,14 +1,14 @@
-# @ebrimasamba/react-native-sms-retriever
+# @huymobile/react-native-sms-retriever-nitro-module
 
-A React Native library for Android SMS Retriever API with support for the new architecture (TurboModules). This library allows you to automatically retrieve SMS messages containing OTP codes without requiring SMS permissions.
+A React Native library for Android SMS Retriever API with support for both Nitro Modules and TurboModules (new architecture). This library allows you to automatically retrieve SMS messages containing OTP codes without requiring SMS permissions.
 
-[![npm version](https://badge.fury.io/js/%40ebrimasamba%2Freact-native-sms-retriever.svg)](https://badge.fury.io/js/%40ebrimasamba%2Freact-native-sms-retriever)
-[![npm downloads](https://img.shields.io/npm/dm/@ebrimasamba/react-native-sms-retriever.svg)](https://www.npmjs.com/package/@ebrimasamba/react-native-sms-retriever)
+[![npm version](https://badge.fury.io/js/%40huymobile%2Freact-native-sms-retriever-nitro-module.svg)](https://badge.fury.io/js/%40huymobile%2Freact-native-sms-retriever-nitro-module)
+[![npm downloads](https://img.shields.io/npm/dm/@huymobile/react-native-sms-retriever-nitro-module.svg)](https://www.npmjs.com/package/@huymobile/react-native-sms-retriever-nitro-module)
 
 ## Features
 
 - ✅ **Android SMS Retriever API** - Automatically retrieve SMS messages
-- ✅ **New Architecture Support** - Built with TurboModules
+- ✅ **New Architecture Support** - Built with Nitro Modules and TurboModules
 - ✅ **TypeScript Support** - Full TypeScript definitions included
 - ✅ **React Hook** - Easy-to-use `useSMSRetriever` hook
 - ✅ **Android-Only** - Optimized specifically for Android SMS Retriever API
@@ -18,9 +18,9 @@ A React Native library for Android SMS Retriever API with support for the new ar
 ## Installation
 
 ```sh
-npm install @ebrimasamba/react-native-sms-retriever
+npm install @huymobile/react-native-sms-retriever-nitro-module
 # or
-yarn add @ebrimasamba/react-native-sms-retriever
+yarn add @huymobile/react-native-sms-retriever-nitro-module
 ```
 
 ### Android Setup
@@ -34,7 +34,7 @@ The library uses autolinking, so no additional setup is required for React Nativ
 ```tsx
 import React from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
-import { useSMSRetriever } from '@ebrimasamba/react-native-sms-retriever';
+import { useSMSRetriever } from '@huymobile/react-native-sms-retriever-nitro-module';
 
 export default function App() {
   const {
@@ -69,7 +69,7 @@ export default function App() {
 ### Using the Native Module Directly
 
 ```tsx
-import NativeSMSRetriever from '@ebrimasamba/react-native-sms-retriever';
+import NativeSMSRetriever from '@huymobile/react-native-sms-retriever-nitro-module';
 
 // Get app hash for SMS message
 const appHash = await NativeSMSRetriever.getAppHash();
@@ -158,6 +158,7 @@ Where `FA+9qCX9VSu` is your app hash (obtained from `getAppHash()`).
 - React Native 0.76+ (New Arch)
 - Android API level 19+
 - Google Play Services (for SMS Retriever API)
+- Nitro Modules (optional, for improved performance)
 
 ## Troubleshooting
 
@@ -187,4 +188,4 @@ MIT
 
 ---
 
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
+Made with ❤️ by [huymobile](https://github.com/huytdps13400)

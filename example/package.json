@@ -10,7 +10,7 @@
     "build:ios": "react-native build-ios --mode Debug"
   },
   "dependencies": {
-    "@ebrimasamba/react-native-sms-retriever": "*",
+    "@huymobile/react-native-sms-retriever-nitro-module": "./",
     "@react-native/new-app-screen": "0.81.1",
     "react": "19.1.0",
     "react-native": "0.81.1",
@@ -24,11 +24,13 @@
     "@react-native-community/cli-platform-android": "20.0.0",
     "@react-native-community/cli-platform-ios": "20.0.0",
     "@react-native/babel-preset": "0.81.1",
+    "@react-native/gradle-plugin": "^0.81.1",
     "@react-native/metro-config": "0.81.1",
     "@react-native/typescript-config": "0.81.1",
     "@types/react": "^19.1.0",
     "react-native-builder-bob": "^0.40.13",
-    "react-native-monorepo-config": "^0.1.9"
+    "react-native-monorepo-config": "^0.1.9",
+    "react-native-nitro-modules": "0.20.1"
   },
   "engines": {
     "node": ">=20"
