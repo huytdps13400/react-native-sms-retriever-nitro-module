@@ -289,10 +289,9 @@ class HybridSMSRetriever : HybridSMSRetrieverSpec() {
     private fun handleSuccess(otp: String, fromBroadcast: Boolean) {
         Log.d(TAG, "SMS retrieval successful: $otp")
 
-        // Unregister ngay để tránh leak & broadcast muộn
         safeUnregister()
 
-        cleanup() // clear timers/isListening
+        cleanup() 
 
         smsCallbacks.forEach { callback ->
             try {
