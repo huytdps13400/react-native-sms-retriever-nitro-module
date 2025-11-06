@@ -43,12 +43,12 @@ export const TurboModuleSMSRetriever: TurboModuleSMSRetrieverInterface = {
   getStatus: () => SMSRetrieverModule.getStatus(),
 
   onSMSRetrieved: (callback: (otp: string) => void) => {
-    const subscription = eventEmitter.addListener('onSMSRetrieved', callback);
+    const subscription = eventEmitter.addListener('onSMSRetrieved', callback as any);
     return () => subscription.remove();
   },
 
   onSMSError: (callback: (error: SMSError) => void) => {
-    const subscription = eventEmitter.addListener('onSMSError', callback);
+    const subscription = eventEmitter.addListener('onSMSError', callback as any);
     return () => subscription.remove();
   },
 };
