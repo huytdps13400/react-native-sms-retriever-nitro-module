@@ -17,6 +17,7 @@
     "src",
     "lib",
     "android",
+    "nitrogen",
     "nitro.json",
     "app.plugin.js",
     "react-native.config.js",
