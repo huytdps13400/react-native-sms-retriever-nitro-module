@@ -22,7 +22,11 @@ export interface Spec extends TurboModule {
   startSMSListener(): void;
   startSMSListenerWithPromise(timeoutMs?: number): Promise<string>;
   readonly onSMSRetrieved: CodegenTypes.EventEmitter<string>;
-  readonly onSMSError: CodegenTypes.EventEmitter<SMSError>;
+  readonly onSMSError: CodegenTypes.EventEmitter<{
+    type: string;
+    message: string;
+    retryCount: number;
+  }>;
   stopSMSListener(): void;
   getAppHash(): Promise<string>;
   getStatus(): Promise<SMSStatus>;
