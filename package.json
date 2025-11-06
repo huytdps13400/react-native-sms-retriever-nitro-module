@@ -1,6 +1,6 @@
 {
   "name": "@huymobile/react-native-sms-retriever-nitro-module",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A react native android sms retriever api library with Nitro module support for new architecture, old architecture, Nitro module, and Expo compatibility",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
